@@ -30,7 +30,7 @@ class Queue
     end
   end
 
-  def pop_by_another_name(*number) #got an error when this was just pop.
+  def pop(*number) #got an error when this was just pop.
     if number.length > 0
       @list.pop(number.first)
     else

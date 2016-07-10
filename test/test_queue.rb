@@ -90,7 +90,7 @@ class QueueTest < Minitest::Test
     q.push('1')
 
     expected = '1'
-    actual = q.pop_by_another_name
+    actual = q.pop
 
     assert_equal expected, actual
   end
@@ -105,8 +105,8 @@ class QueueTest < Minitest::Test
     expected1 = "1"
     expected2 = ['0', '0', '1']
 
-    actual1 = q.pop_by_another_name
-    actual2 = q.pop_by_another_name(3)
+    actual1 = q.pop
+    actual2 = q.pop(3)
 
     assert_equal expected1, actual1
     assert_equal expected2, actual2
@@ -123,8 +123,8 @@ class QueueTest < Minitest::Test
     expected2 = 1
 
     actual1 = q.count
-    q.pop_by_another_name
-    q.pop_by_another_name(3)
+    q.pop
+    q.pop(3)
     actual2 = q.count
 
     assert_equal expected1, actual1

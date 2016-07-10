@@ -1,10 +1,10 @@
 require_relative 'encodable'
 
-class LetterEncoder
+class LetterDecoder
   include Encodable
 
-  def encode(letter)
-    dictionary[letter]
+  def decode(code)
+    dictionary.key(code)
   end
 
   def dictionary_length
