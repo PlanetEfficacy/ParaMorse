@@ -1,27 +1,44 @@
-# q = ParaMorse::Queue.new
-# q.push('1')
-# q.push('0')
-# q.push('0')
-# q.push('1')
-# q.push('1')
-# q.count
-# # => 5
-# q.tail
-# # => 1
-# q.tail(3)
-# # => ['1', '1', '0']
-# q.peek
-# # => 1
-# q.peek(3)
-# # => ['1', '0', '0']
-# q.count
-# # => 5
-# q.pop
-# # => '1'
-# q.pop(3)
-# # => ['0', '0', '1']
-# q.count
-# # => 1
-# q.clear
-# q.count
-# # => 0
+require 'pry'
+
+class Queue
+
+  def initialize
+    @list = Array.new
+  end
+
+  def count
+    @list.count
+  end
+
+  def push(digit)
+    @list << digit
+  end
+
+  def tail(*number)
+    if number.length > 0
+      @list[(number.first * -1)..-1].reverse
+    else
+      @list.last
+    end
+  end
+
+  def peek(*number)
+    if number.length > 0
+      @list[0..(number.first - 1)]
+    else
+      @list.first
+    end
+  end
+
+  def pop_by_another_name(*number) #got an error when this was just pop.
+    if number.length > 0
+      @list.pop(number.first)
+    else
+      @list.pop
+    end
+  end
+
+  def clear
+    @list.clear
+  end
+end
