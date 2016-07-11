@@ -4,7 +4,7 @@ class LetterEncoder
   include Encodable
 
   def encode(letter)
-    dictionary[letter]
+    dictionary[letter.downcase]
   end
 
   def dictionary_length
