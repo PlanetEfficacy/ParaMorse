@@ -1,19 +1,41 @@
-require_relative 'letter_encoder'
+require_relative 'letter_decoder'
+require_relative 'queue'
 
-class Encoder
+class Decoder
 
-  def encode(word)
-    letter_encoder = LetterEncoder.new
-    encoded_word = word.each_char.map.with_index do |letter, index|
-      encoded_letter = letter_encoder.encode(letter)
+  def decode(morse_code)
+    letter_decoder = LetterDecoder.new
+    queue = Queue.new
+    decoded_word = ""
+    morse_code.each_char.with_index do |digit, index|
+      queue.push(digit)
+      if queue_ends_with_space?(queue)
+        encoded_letter = get_next_letter(queue)
+      elsif end_of_morse_code_message?(index, morse_code)
+        encoded_letter = get_last_letter(queue)
+      end
+      if encoded_letter
+        decoded_word += letter_decoder.decode(encoded_letter)
+        queue.clear
+      end
     end
-    encoded_word.join("000")
+    return decoded_word
+  end
+
+  def get_last_letter(queue)
+    queue.peek(queue.count).join
+  end
+
+  def get_next_letter(queue)
+    encoded_letter = queue.peek(queue.count - 3).join
+  end
+
+  def queue_ends_with_space?(queue)
+    queue.count >= 3 && queue.tail(3).join() === "000"
+  end
+
+  def end_of_morse_code_message?(index, morse_code)
+    morse_code.length - 1 == index
   end
 
 end
-# encoder = ParaMorse::Encoder.new
-# encoder.encode("Word")
-# # => "1011101110001110111011100010111010001110101"
-# decoder = ParaMorse::Decoder.new
-# decoder.decode("1011101110001110111011100010111010001110101")
-# # => "word"
